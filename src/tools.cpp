@@ -58,12 +58,9 @@ MatrixXd Tools::CalculateJacobian(const VectorXd& x_state)
 	float vy = x_state(3);
 
 	//check division by zero
-	if (px == 0 ||
-	    py == 0 ||
-	    vx == 0 ||
-	    vy == 0)
+	if (px == 0 || py == 0 )
 	{
-	    cout << "At least one parameter is 0 and can lead to unexpected results."
+	    cout << "px or py is 0 and can lead to unexpected results."
 	    " Please check it." << endl;
 
 	    return Hj;
