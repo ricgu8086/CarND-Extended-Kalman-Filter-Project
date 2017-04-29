@@ -10,4 +10,15 @@ set(sources
     src/main.cpp
     src/tools.cpp)
 
+set(CMAKE_C_FLAGS
+    "-Wextra -Wall -g2")
+
+set(CMAKE_CXX_FLAGS
+    "-Wextra -Wall -g2")
+    
+set(CMAKE_BUILD_TYPE
+    Debug)
+
+    
+
 add_executable(ExtendedKF ${sources})

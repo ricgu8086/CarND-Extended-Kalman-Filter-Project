@@ -10,7 +10,8 @@ public:
 
 	enum SensorType
 	{
-		LASER, RADAR
+		LASER,
+		RADAR
 	} sensor_type_;
 
 	Eigen::VectorXd gt_values_;

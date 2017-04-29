@@ -28,6 +28,11 @@ public:
 	 */
 	Eigen::MatrixXd CalculateJacobian(const Eigen::VectorXd& x_state);
 
+	/**
+	 * A helper method to convert from polar to cartesian coordinates.
+	 */
+	Eigen::VectorXd polar2cartesian(const Eigen::VectorXd& polar);
+
 };
 
 #endif /* TOOLS_H_ */
