@@ -57,19 +57,17 @@ MatrixXd Tools::CalculateJacobian(const VectorXd& x_state)
 	double vx = x_state(2);
 	double vy = x_state(3);
 
-	//check division by zero
-	if (px == 0 && py == 0 )
-	{
-	    cout << "px or py is 0 and can lead to unexpected results."
-	    " Please check it." << endl;
-
-	    return Hj;
-	}
-
 	//compute the Jacobian matrix
 	double mag_sq = px*px + py*py;
 	double pow_half = pow(mag_sq, 1.0/2);
 	double pow_three_half = pow(mag_sq, 3.0/2);
+
+	//check division by zero
+	if(fabs(mag_sq) < 0.0001)
+	{
+			cout << "CalculateJacobian() - Error - Division by Zero" << endl;
+			return Hj;
+	}
 
 	Hj << px/pow_half                       , py/pow_half                       , 0          , 0          ,
 	      -py/mag_sq                        , px/mag_sq                         , 0          , 0          ,
