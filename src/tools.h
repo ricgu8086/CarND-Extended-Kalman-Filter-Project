@@ -31,7 +31,11 @@ public:
 	/**
 	 * A helper method to convert from polar to cartesian coordinates.
 	 */
-	Eigen::VectorXd polar2cartesian(const Eigen::VectorXd& polar);
+	static Eigen::VectorXd polar2cartesian(const Eigen::VectorXd& polar);
+	/**
+	 * A helper method to convert from cartesian to polar coordinates.
+	 */
+	static Eigen::VectorXd cartesian2polar(const Eigen::VectorXd& cartesian);
 
 };
 

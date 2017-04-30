@@ -90,8 +90,16 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack)
 			/**
 			 Convert radar from polar to cartesian coordinates and initialize state.
 			 */
-			this->ekf_.x_  = tools.polar2cartesian(measurement_pack.raw_measurements_);
-
+			VectorXd cartesian = tools.polar2cartesian(measurement_pack.raw_measurements_);
+			this-> ekf_.x_ << cartesian[0], cartesian[1], 0, 0;
+			/*
+			 * Seems a bit strange not to use measured velocities to initialize the state.
+			 * However, from the lectures:
+			 * "Although radar gives velocity data in the form of the range rate rho_dot,
+			 * a radar measurement does not contain enough information to determine
+			 * the state variable velocities vx and vy. You can, however, use the
+			 * radar measurements rho and phi to initialize the state variable locations px and py."
+			 */
 		}
 		else if (measurement_pack.sensor_type_ == MeasurementPackage::LASER)
 		{

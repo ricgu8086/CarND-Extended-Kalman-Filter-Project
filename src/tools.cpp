@@ -58,7 +58,7 @@ MatrixXd Tools::CalculateJacobian(const VectorXd& x_state)
 	double vy = x_state(3);
 
 	//check division by zero
-	if (px == 0 || py == 0 )
+	if (px == 0 && py == 0 )
 	{
 	    cout << "px or py is 0 and can lead to unexpected results."
 	    " Please check it." << endl;
@@ -95,4 +95,20 @@ VectorXd Tools::polar2cartesian(const VectorXd& polar)
 	cartesian << px , py, vx, vy;
 
 	return cartesian;
+}
+
+VectorXd Tools::cartesian2polar(const VectorXd &cartesian)
+{
+	double px = cartesian(0);
+	double py = cartesian(1);
+	double vx = cartesian(2);
+	double vy = cartesian(3);
+
+	VectorXd polar = VectorXd(3);
+
+	polar(0) = sqrt(px*px + py*py);
+	polar(1) = atan2(py,px);
+	polar(2) = (px*vx + py*vy)/max(.0001,polar(0));
+
+	return polar;
 }
