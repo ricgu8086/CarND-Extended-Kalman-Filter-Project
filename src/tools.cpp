@@ -52,10 +52,10 @@ MatrixXd Tools::CalculateJacobian(const VectorXd& x_state)
 	 */
 	MatrixXd Hj(3,4);
 
-	float px = x_state(0);
-	float py = x_state(1);
-	float vx = x_state(2);
-	float vy = x_state(3);
+	double px = x_state(0);
+	double py = x_state(1);
+	double vx = x_state(2);
+	double vy = x_state(3);
 
 	//check division by zero
 	if (px == 0 || py == 0 )
@@ -67,9 +67,9 @@ MatrixXd Tools::CalculateJacobian(const VectorXd& x_state)
 	}
 
 	//compute the Jacobian matrix
-	float mag_sq = px*px + py*py;
-	float pow_half = pow(mag_sq, 1.0/2);
-	float pow_three_half = pow(mag_sq, 3.0/2);
+	double mag_sq = px*px + py*py;
+	double pow_half = pow(mag_sq, 1.0/2);
+	double pow_three_half = pow(mag_sq, 3.0/2);
 
 	Hj << px/pow_half                       , py/pow_half                       , 0          , 0          ,
 	      -py/mag_sq                        , px/mag_sq                         , 0          , 0          ,
@@ -82,14 +82,14 @@ MatrixXd Tools::CalculateJacobian(const VectorXd& x_state)
 
 VectorXd Tools::polar2cartesian(const VectorXd& polar)
 {
-	float rho = polar(0);
-	float phi = polar(1);
-	float rho_dot = polar(2);
+	double rho = polar(0);
+	double phi = polar(1);
+	double rho_dot = polar(2);
 
-	float px = rho*sin(phi);
-	float py = -rho*cos(phi);
-	float vx = rho_dot*sin(phi);
-	float vy = -rho_dot*sin(phi);
+	double px = rho*sin(phi);
+	double py = -rho*cos(phi);
+	double vx = rho_dot*sin(phi);
+	double vy = -rho_dot*sin(phi);
 
 	VectorXd cartesian(4);
 	cartesian << px , py, vx, vy;
