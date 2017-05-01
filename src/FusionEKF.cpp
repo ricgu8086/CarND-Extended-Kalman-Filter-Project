@@ -81,7 +81,7 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack)
 		 * Remember: you'll need to convert radar from polar to cartesian coordinates.
 		 */
 		// first measurement
-		cout << "EKF: " << endl;
+		//cout << "EKF: " << endl;
 
 		this->ekf_.x_ = VectorXd(4);
 

@@ -149,6 +149,8 @@ int main(int argc, char* argv[])
 	vector<VectorXd> estimations;
 	vector<VectorXd> ground_truth;
 
+	Tools tools;
+
 	//Call the EKF-based fusion
 	size_t N = measurement_pack_list.size();
 	for (size_t k = 0; k < N; ++k)
@@ -170,8 +172,8 @@ int main(int argc, char* argv[])
 			out_file_ << measurement_pack_list[k].raw_measurements_(0) << "\t";
 			out_file_ << measurement_pack_list[k].raw_measurements_(1) << "\t";
 		}
-		else if (measurement_pack_list[k].sensor_type_
-				== MeasurementPackage::RADAR)
+
+		else if (measurement_pack_list[k].sensor_type_	== MeasurementPackage::RADAR)
 		{
 			// output the estimation in the cartesian coordinates
 			float ro = measurement_pack_list[k].raw_measurements_(0);
@@ -191,10 +193,24 @@ int main(int argc, char* argv[])
 
 		estimations.push_back(fusionEKF.ekf_.x_);
 		ground_truth.push_back(gt_pack_list[k].gt_values_);
+
+		// RMSE real time
+		vector<VectorXd> est;
+		vector<VectorXd> gt;
+
+		est.push_back(fusionEKF.ekf_.x_);
+		gt.push_back(gt_pack_list[k].gt_values_);
+
+		VectorXd rmse = tools.CalculateRMSE(est, gt);
+
+		cout << "RMSE" << endl
+			 << rmse(0) << endl
+			 << rmse(1) << endl
+			 << rmse(2) << endl
+			 << rmse(3) << endl;
 	}
 
 	// compute the accuracy (RMSE)
-	Tools tools;
 	cout << "Accuracy - RMSE:" << endl
 			<< tools.CalculateRMSE(estimations, ground_truth) << endl;
 
