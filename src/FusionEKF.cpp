@@ -164,7 +164,7 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack)
 	if (measurement_pack.sensor_type_ == MeasurementPackage::RADAR)
 	{
 		// Radar updates
-		VectorXd z = tools.polar2cartesian(measurement_pack.raw_measurements_);
+		VectorXd z = measurement_pack.raw_measurements_;
 
 		// Linearize measurement function H
 		Hj_ = tools.CalculateJacobian(ekf_.x_);
