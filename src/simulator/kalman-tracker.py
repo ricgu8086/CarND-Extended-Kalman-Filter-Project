@@ -38,8 +38,8 @@ def telemetry(sid, data):
 		#print("Sending: "+x_markers+" , "+y_markers)
 
 		output = output.decode("utf-8") 
-		#print(output)
-		outputVals = output.split('\n')
+		print(output)
+		outputVals = output.split('\r\n')
 		
 		if outputVals[0].find("RMSE") != -1:
 			send_estimate_rmse(x_markers,y_markers, outputVals[1],outputVals[2],outputVals[3],outputVals[4])
