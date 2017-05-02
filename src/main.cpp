@@ -17,7 +17,7 @@ void check_arguments(int argc, char* argv[])
 {
 	string usage_instructions = "Usage instructions: ";
 	usage_instructions += argv[0];
-	usage_instructions += " path/to/input.txt output.txt";
+	usage_instructions += " path/to/input.txt output.txt [LIDAR_ENABLED RADAR_ENABLED]";
 
 	bool has_valid_args = false;
 
@@ -31,11 +31,11 @@ void check_arguments(int argc, char* argv[])
 		cerr << "Please include an output file.\n" << usage_instructions
 				<< endl;
 	}
-	else if (argc == 3)
+	else if (argc == 3 || argc == 5)
 	{
 		has_valid_args = true;
 	}
-	else if (argc > 3)
+	else if (argc > 5)
 	{
 		cerr << "Too many arguments.\n" << usage_instructions << endl;
 	}
@@ -75,6 +75,24 @@ int main(int argc, char* argv[])
 
 	check_files(in_file_, in_file_name_, out_file_, out_file_name_);
 
+	bool LIDAR_ENABLED = true;
+	bool RADAR_ENABLED = true;
+
+	if (argc == 5)
+	{
+		if (argv[3] != string("LIDAR_ENABLED"))
+		{
+			cout << "LIDAR measurements are ignored. Set flag LIDAR_ENABLED to use them." << endl;
+			LIDAR_ENABLED = false;
+		}
+
+		if (argv[4] != string("RADAR_ENABLED"))
+		{
+			cout << "RADAR measurements are ignored. Set flag RADAR_ENABLED to use them." << endl;
+			RADAR_ENABLED = false;
+		}
+	}
+
 	vector<MeasurementPackage> measurement_pack_list;
 	vector<GroundTruthPackage> gt_pack_list;
 
@@ -93,7 +111,7 @@ int main(int argc, char* argv[])
 
 		// reads first element from the current line
 		iss >> sensor_type;
-		if (sensor_type.compare("L") == 0)
+		if (sensor_type.compare("L") == 0 && LIDAR_ENABLED)
 		{
 			// LASER MEASUREMENT
 
@@ -109,7 +127,7 @@ int main(int argc, char* argv[])
 			meas_package.timestamp_ = timestamp;
 			measurement_pack_list.push_back(meas_package);
 		}
-		else if (sensor_type.compare("R") == 0)
+		else if (sensor_type.compare("R") == 0 && RADAR_ENABLED)
 		{
 			// RADAR MEASUREMENT
 
