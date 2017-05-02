@@ -84,10 +84,10 @@ VectorXd Tools::polar2cartesian(const VectorXd& polar)
 	double phi = polar(1);
 	double rho_dot = polar(2);
 
-	double px = rho*sin(phi);
-	double py = -rho*cos(phi);
-	double vx = rho_dot*sin(phi);
-	double vy = -rho_dot*sin(phi);
+	double px = rho*cos(phi);
+	double py = rho*sin(phi);
+	double vx = rho_dot*cos(phi);
+	double vy = rho_dot*sin(phi);
 
 	VectorXd cartesian(4);
 	cartesian << px , py, vx, vy;
