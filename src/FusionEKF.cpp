@@ -54,7 +54,11 @@ FusionEKF::FusionEKF()
 	VectorXd x(4);
 	x = VectorXd::Zero(4);
 
-	MatrixXd F = MatrixXd::Zero(4,4);
+	MatrixXd F = MatrixXd(4,4);
+	F << 1, 0, 1, 0,
+		 0, 1, 0, 1,
+		 0, 0, 1, 0,
+		 0, 0, 0, 1;
 
 	ekf_.Init(x, P, F, H_laser_, R_laser_, Q);
 
