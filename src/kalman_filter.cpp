@@ -61,7 +61,7 @@ void KalmanFilter::UpdateEKF(const VectorXd &z)
 	MatrixXd y, s, k, I;
 	I = MatrixXd::Identity(x_.size(), x_.size());
 
-	y = z - Tools::cartesian2polar(x_);
+	y = z - Tools::cartesian2polar(x_); // y has shape (3,1), it's the error in polar coordinates (RADAR measurement)
 
 	// Ensure y(1) (phi) is in the specified range (-PI, PI)
 	while (y(1) > M_PI || y(1) < -M_PI)
@@ -73,7 +73,7 @@ void KalmanFilter::UpdateEKF(const VectorXd &z)
 	}
 
     s = H_*P_*H_.transpose() + R_;
-    k = P_*H_.transpose()*s.inverse();
+    k = P_*H_.transpose()*s.inverse(); // k has shape (4,3)
     x_ = x_ + (k*y);
     P_ = (I - k*H_)*P_;
 }
