@@ -91,7 +91,7 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack)
 			 Convert radar from polar to cartesian coordinates and initialize state.
 			 */
 			VectorXd cartesian = tools.polar2cartesian(measurement_pack.raw_measurements_);
-			this-> ekf_.x_ << cartesian[0], cartesian[1], 0, 0;
+			this->ekf_.x_ << cartesian[0], cartesian[1], 0, 0;
 			/*
 			 * Seems a bit strange not to use measured velocities to initialize the state.
 			 * However, from the lectures:
@@ -114,6 +114,11 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack)
 
 		// done initializing, no need to predict or update
 		is_initialized_ = true;
+
+		// print the output
+		cout << "x_ = " << ekf_.x_ << endl;
+		cout << "P_ = " << ekf_.P_ << endl;
+
 		return;
 	}
 
@@ -137,11 +142,11 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack)
 	ekf_.F_(1, 3) = dt;
 
 
+	//set the process covariance matrix Q
 	float dt_2 = dt * dt;
 	float dt_3 = dt_2 * dt;
 	float dt_4 = dt_3 * dt;
 
-	//set the process covariance matrix Q
 	float noise_ax = 9, noise_ay = 9;
 
 	ekf_.Q_ <<  dt_4/4*noise_ax	, 0					, dt_3/2*noise_ax	, 0,
