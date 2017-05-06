@@ -34,6 +34,7 @@ Figure 3. Simulation using only RADAR.
 | RADAR         | 0.126346  | 0.132268  | **0.295413** | **0.304822** |
 |---------------|-----------|-----------|----------|----------|
 | LIDAR + RADAR | **0.0747761** | **0.0743069** | **0.289759** | **0.249506** |
+
 Table 1. RMSE for different magnitudes and sensors.
 
 In the table can be observed that there is no universally better sensor. LIDAR has a lower RMSE when measuring position, but RADAR is the winner when measuring speed. Combining both sensors, which is typically known as "sensor fusion", makes a great improvement in all the magnitudes measured.
